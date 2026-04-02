@@ -1,0 +1,101 @@
+/* =========================================
+   WheatGuard Core Styles
+========================================= */
+
+/* Hero Background and Structure */
+.hero-wrapper {
+    position: relative;
+    background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC3OP4CKl2isYwe0MJMVcsVAPXsNyQbldzn5Puo4PbOCJ_rmJrXkbrUAZk19DuivdA2k9Zxc_NY1q0-XDe21lhc3Z2TSK4Wx-MEkMO5qxbkrvT-geTbic2r1s9O_o5TpHkQ_o6hBaJVGWhk1Pc553OqrskS_sjYMlVKKJ6yFvXBNuhjZp5uUKvDmR95RfX08kEdRgtzMhdys5oNSvQqxGswxgNWbxxNMqpmie8Jiq7kHGMY-iJKMxeyl_IEa9aP_NX_maipXeZMP5g');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    z-index: 0;
+}
+
+.hero-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(23, 56, 40, 0.85) 0%, rgba(15, 34, 25, 0.95) 100%);
+    z-index: 1;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.9);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+.glass-card {
+    background: rgba(248, 250, 252, 0.85); /* slate-50 equivalent */
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(16, 185, 129, 0.15); /* emerald border */
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Disease Library Grid */
+.disease-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.search-input-wrapper {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #64748b; /* slate-500 */
+}
+
+.search-input {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    border-radius: 9999px;
+    border: 2px solid #e2e8f0; /* slate-200 */
+    background: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #10b981; /* emerald-500 */
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+/* Fix missing Google UI issues */
+body { top: 0px !important; position: static !important; }
+.goog-te-banner-frame { display: none !important; }
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+.VIpgJd-Zvi9od-ORHb-OEVmcd { display: none !important; }
+.VIpgJd-Zvi9od-aigBte { display: none !important; }
+.goog-tooltip { display: none !important; box-shadow: none !important; }
+.goog-tooltip:hover { display: none !important; box-shadow: none !important; }
+.goog-text-highlight { background-color: transparent !important; border: none !important; box-shadow: none !important; }
+#goog-gt-tt { display: none !important; }
+body > .skiptranslate { display: none !important; }

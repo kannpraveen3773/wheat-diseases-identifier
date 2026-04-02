@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>WheatGuard - Disease Detection</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Manrope:wght@500;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <!-- FontAwesome for robust specific iconography -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        // Emerald and Slate Gray Theme Focus
+                        "surface": "#f8fafc", /* slate-50 */
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#f1f5f9", /* slate-100 */
+                        "on-surface": "#0f172a", /* slate-900 */
+                        "on-surface-variant": "#475569", /* slate-600 */
+                        "outline-variant": "#cbd5e1", /* slate-300 */
+                        "primary": "#10b981", /* emerald-500 */
+                        "primary-container": "#d1fae5", /* emerald-100 */
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#064e3b", /* emerald-900 */
+                        "secondary": "#334155", /* slate-700 */
+                        "error": "#ef4444", /* red-500 */
+                        "error-container": "#fee2e2", /* red-100 */
+                        "on-error-container": "#7f1d1d", /* red-900 */
+                    },
+                    fontFamily: {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen pb-32 font-body">
+
+    <!-- TopNav (Unchanged Layout, Modified Aesthetics) -->
+    <header
+        class="fixed top-0 w-full z-[100] flex items-center justify-between px-6 py-4 bg-white/80 backdrop-blur-md shadow-sm border-b border-outline-variant/30">
+        <a href="index.html" class="flex items-center gap-2 cursor-pointer">
+            <span class="material-symbols-outlined text-primary text-2xl" data-icon="agriculture">agriculture</span>
+            <span class="text-xl font-black text-on-surface tracking-tighter">Wheat<span
+                    class="text-primary">Guard</span></span>
+        </a>
+        <div class="flex items-center gap-6">
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="text-on-surface-variant hover:text-primary transition-colors font-label text-[11px] font-bold uppercase tracking-wider"
+                    href="index.html">Home</a>
+                <a class="text-primary font-bold font-label text-[11px] uppercase tracking-wider bg-primary-container px-3 py-1 rounded-full"
+                    href="dashboard.html">Detect</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors font-label text-[11px] font-bold uppercase tracking-wider"
+                    href="disease_info.html">Info</a>
+            </nav>
+            <!-- Google Translate Setup -->
+            <div class="relative group ml-4" id="custom-lang-selector">
+                <button
+                    class="flex items-center gap-2 bg-surface-container px-4 py-2 hover:bg-outline-variant/30 text-on-surface rounded-full font-bold font-label text-xs uppercase tracking-wider transition-colors border border-outline-variant/50"
+                    aria-label="Select Language">
+                    <i class="fa-solid fa-language text-[16px]"></i>
+                    <span id="current-lang-text" class="notranslate">EN</span>
+                    <i class="fa-solid fa-chevron-down text-[12px]"></i>
+                </button>
+                <div
+                    class="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-outline-variant/30 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top translate-y-2 group-hover:translate-y-0 z-50">
+                    <ul class="py-2 flex flex-col font-label text-sm font-semibold text-on-surface-variant">
+                        <li><button
+                                class="w-full text-left px-4 py-2 hover:bg-primary-container hover:text-on-primary-container transition-colors notranslate"
+                                onclick="changeLanguage('en', 'EN')">English (EN)</button></li>
+                        <li><button
+                                class="w-full text-left px-4 py-2 hover:bg-primary-container hover:text-on-primary-container transition-colors notranslate"
+                                onclick="changeLanguage('hi', 'HI')">हिन्दी (HI)</button></li>
+                        <!-- Add other languages as required -->
+                    </ul>
+                </div>
+            </div>
+            <div id="google_translate_element" class="hidden"></div>
+        </div>
+    </header>
+
+    <main class="pt-[72px] space-y-16">
+
+        <!-- Section 1: Hero & Detection Tool (Glassmorphism & New Background) -->
+        <section class="hero-wrapper min-h-[500px] flex items-center justify-center py-16 px-4 md:px-8">
+            <div class="max-w-4xl w-full z-10 glass-panel rounded-3xl p-8 md:p-12">
+                <div class="text-center mb-10 space-y-4">
+                    <div
+                        class="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full font-label text-xs font-black uppercase tracking-widest border border-primary/20">
+                        <i class="fa-solid fa-leaf"></i> Rapid AI Diagnostics
+                    </div>
+                    <h1 class="text-4xl md:text-5xl font-black text-on-surface tracking-tight" id="heroHeadline">
+                        Diagnose Wheat Diseases <br class="hidden md:block" /> Instantly & Accurately.
+                    </h1>
+                    <p class="text-on-surface-variant text-lg max-w-2xl mx-auto" id="heroSubtext">
+                        Upload a photo of your affected wheat field or specific leaves. Our intelligent system will
+                        instantly identify the disease and provide tailored chemical and organic treatments.
+                    </p>
+                </div>
+
+                <!-- Detection Console -->
+                <div class="bg-surface-container-lowest rounded-2xl p-6 shadow-sm border border-outline-variant/40">
+                    <input type="file" id="imageInput" accept="image/*" class="hidden" title="Upload Wheat image"
+                        aria-label="Upload Wheat image">
+                    <div id="fileStatus"
+                        class="font-label text-sm font-bold text-primary hidden text-center mb-4 bg-primary-container p-2 rounded-lg">
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-center">
+
+                        <!-- Dropzone -->
+                        <div class="relative bg-surface rounded-xl border-2 border-dashed border-outline-variant p-8 flex flex-col items-center justify-center text-center transition-all hover:border-primary w-full h-[250px] overflow-hidden cursor-pointer"
+                            onclick="document.getElementById('imageInput').click()">
+                            <img id="imagePreview" class="hidden absolute inset-0 w-full h-full object-cover z-0"
+                                alt="Uploaded Preview">
+                            <div id="uploadPlaceholder" class="relative z-10 flex flex-col items-center">
+                                <div
+                                    class="w-16 h-16 rounded-full bg-primary-container text-primary flex items-center justify-center mb-4">
+                                    <i class="fa-solid fa-cloud-arrow-up text-3xl"></i>
+                                </div>
+                                <h3 class="font-headline font-bold text-[16px] text-on-surface">Click or Drop Image Here
+                                </h3>
+                                <p class="text-on-surface-variant text-sm mt-1">Supports JPG, PNG</p>
+                            </div>
+                        </div>
+
+                        <!-- Action Panel -->
+                        <div class="flex flex-col justify-center space-y-6">
+                            <div class="space-y-3">
+                                <h3 class="font-bold text-lg text-on-surface"><i
+                                        class="fa-solid fa-microchip text-primary mr-2"></i> How it works:</h3>
+                                <ul class="text-sm text-on-surface-variant space-y-2">
+                                    <li><i class="fa-solid fa-check text-primary mr-2"></i> Take a clear close-up of the
+                                        leaf.</li>
+                                    <li><i class="fa-solid fa-check text-primary mr-2"></i> Upload it via standard
+                                        formats.</li>
+                                    <li><i class="fa-solid fa-check text-primary mr-2"></i> Press detect for a 98%
+                                        accurate diagnosis.</li>
+                                </ul>
+                            </div>
+                            <button id="detectBtn"
+                                class="w-full bg-primary hover:bg-primary/90 text-on-primary py-4 rounded-xl font-label text-sm font-black tracking-widest uppercase shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass-chart text-lg"></i> Run Diagnostic
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Results Display (Hidden by default, triggered by JS) -->
+        <section class="max-w-5xl mx-auto px-4 md:px-8 hidden fade-in-up" id="results-section">
+            <div class="bg-surface-container-lowest rounded-3xl p-8 shadow-xl border border-outline-variant/30">
+                <div class="flex flex-col space-y-2 mb-8 border-b border-outline-variant/30 pb-4">
+                    <span id="severityBadge"
+                        class="inline-flex max-w-fit items-center gap-2 font-label text-xs font-extra-bold text-error-container tracking-widest uppercase bg-error text-white px-3 py-1.5 rounded-md shadow-sm">
+                        <i class="fa-solid fa-triangle-exclamation"></i> Action Required
+                    </span>
+                    <h2 class="text-4xl font-black text-on-surface tracking-tight" id="resultTitle">Analysis Results...
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
+                    <!-- Image Ref -->
+                    <div class="md:col-span-4">
+                        <div
+                            class="relative rounded-2xl overflow-hidden aspect-square shadow-inner border-4 border-surface container-highest">
+                            <img id="resultImage" alt="Analyzed Crop"
+                                class="w-full h-full object-cover bg-surface-container"
+                                src="https://via.placeholder.com/400" />
+                            <!-- Scanning Overlay UX -->
+                            <div class="absolute inset-0 border-2 border-primary/50 m-2 rounded-xl pointer-events-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Data Ref -->
+                    <div class="md:col-span-8 flex flex-col justify-start space-y-8">
+                        <!-- Details -->
+                        <div class="bg-primary-container/30 p-5 rounded-2xl border-l-4 border-primary">
+                            <h4 class="font-bold text-primary mb-2 flex items-center gap-2"><i
+                                    class="fa-solid fa-circle-info"></i> Clinical Diagnosis</h4>
+                            <p class="text-on-surface-variant font-medium text-[15px] leading-relaxed"
+                                id="detailedExplanation">
+                                Detailed information regarding the identified disease will appear here directly from the
+                                AI analysis engine.
+                            </p>
+                        </div>
+
+                        <!-- Recommendations grid -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <!-- Chemical -->
+                            <div class="glass-card p-6 rounded-2xl flex flex-col items-start gap-4">
+                                <div
+                                    class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-secondary border border-outline-variant/30">
+                                    <i class="fa-solid fa-flask text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-on-surface mb-2">Chemical Prescriptions</h4>
+                                    <p class="text-sm text-on-surface-variant leading-relaxed" id="rec1Desc">Awaiting
+                                        computational output regarding standardized chemical applications.</p>
+                                </div>
+                            </div>
+
+                            <!-- Organic -->
+                            <div class="glass-card p-6 rounded-2xl flex flex-col items-start gap-4">
+                                <div
+                                    class="w-12 h-12 bg-white rounded-xl shadow-sm flex items-center justify-center text-primary border border-outline-variant/30">
+                                    <i class="fa-solid fa-leaf text-2xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-on-surface mb-2">Organic Path</h4>
+                                    <p class="text-sm text-on-surface-variant leading-relaxed" id="rec2Desc">Awaiting
+                                        organic control methodologies and crop rotation guidance.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    </main>
+
+    <!-- BottomNavBar (Unchanged functionally, minor stylistic adjustments) -->
+    <nav
+        class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 backdrop-blur-xl bg-white/90 border-t border-outline-variant/30 z-[100] md:hidden shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
+        <div class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 hover:text-primary transition-all cursor-pointer"
+            onclick="window.location.href='index.html'">
+            <i class="fa-solid fa-house mb-1 text-lg"></i>
+            <span class="font-label text-[10px] font-bold uppercase tracking-wider">Home</span>
+        </div>
+        <div class="flex flex-col items-center justify-center bg-primary text-white rounded-2xl px-6 pt-3 pb-2 -translate-y-4 shadow-lg cursor-pointer"
+            onclick="window.location.href='dashboard.html'">
+            <i class="fa-solid fa-camera mb-1 text-xl"></i>
+            <span class="font-label text-[10px] font-bold uppercase tracking-wider">Detect</span>
+        </div>
+        <div class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 hover:text-primary transition-all cursor-pointer"
+            onclick="window.location.href='disease_info.html'">
+            <i class="fa-solid fa-circle-info mb-1 text-lg"></i>
+            <span class="font-label text-[10px] font-bold uppercase tracking-wider">Info</span>
+        </div>
+    </nav>
+
+    <script>
+        // 1. Elements selection
+        const imageInput = document.getElementById('imageInput');
+        const detectBtn = document.getElementById('detectBtn');
+        const fileStatus = document.getElementById('fileStatus');
+        const imagePreview = document.getElementById('imagePreview');
+        const uploadPlaceholder = document.getElementById('uploadPlaceholder');
+
+
+
+        // 2. Image Select Preview:
+        imageInput.addEventListener('change', () => {
+            const file = imageInput.files[0];
+            if (file) {
+                if (fileStatus) {
+                    fileStatus.innerText = "Selected: " + file.name + " - Ready!";
+                    fileStatus.classList.remove('hidden');
+                }
+
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove('hidden');
+                    uploadPlaceholder.classList.add('hidden');
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // 3. Detect Button Logic (Maintains backend linkage):
+        detectBtn.addEventListener('click', async () => {
+            const file = imageInput.files[0];
+            if (!file) {
+                alert("Please select or drop a wheat leaf photo first!");
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', file);
+
+            // Button styling during load
+            detectBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin text-lg"></i> Analyzing...';
+            detectBtn.disabled = true;
+
+            try {
+                // Main Fetch call mapped strictly to localhost:5000 as requested
+                const response = await fetch('http://localhost:5000/api/analyze-wheat', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+
+                    // Display mapping strictly preserved
+                    const title = document.getElementById('resultTitle');
+                    if (title) title.innerText = data.diseaseName || data.disease_name || "Unknown Disease Detected";
+
+                    const details = document.getElementById('detailedExplanation');
+                    if (details) details.innerText = data.detailedExplanation || data.symptoms || "No detailed explanation available for this condition.";
+
+                    const rec1 = document.getElementById('rec1Desc');
+                    if (rec1) rec1.innerText = data.chemicalRemedy || data.chemical_remedy || data.remedies || "No chemical remedy provided.";
+
+                    const rec2 = document.getElementById('rec2Desc');
+                    if (rec2) rec2.innerText = data.organicRemedy || data.organic_remedy || data.symptoms || "No organic remedy provided.";
+
+                    // Sync Result Image
+                    const resultImage = document.getElementById('resultImage');
+                    if (resultImage && imagePreview.src) {
+                        resultImage.src = imagePreview.src;
+                    }
+
+                    // Reveal Results Section with Animation
+                    const resultsSection = document.getElementById('results-section');
+                    if (resultsSection) {
+                        resultsSection.style.display = 'block';
+                        resultsSection.classList.remove('hidden');
+                        resultsSection.classList.add('fade-in-up'); // Ensure animation class is attached
+                        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+
+                    // Reset button
+                    detectBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass-chart text-lg"></i> Run Diagnostic';
+                    detectBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error("Error analyzing image:", error);
+                alert("Failed to analyze image. Ensure the Python backend is running locally.");
+                detectBtn.innerHTML = '<i class="fa-solid fa-magnifying-glass-chart text-lg"></i> Run Diagnostic';
+                detectBtn.disabled = false;
+            }
+        });
+    </script>
+
+    <!-- Google Translate Script Setup -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'hi,ta,pa,te,kn,en',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        function changeLanguage(langCode, btnText) {
+            document.getElementById('current-lang-text').innerText = btnText;
+            const selectField = document.querySelector(".goog-te-combo");
+            if (selectField) {
+                selectField.value = langCode;
+                selectField.dispatchEvent(new Event("change"));
+            }
+        }
+    </script>
+    <script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>WheatGuard - Disease Information Library</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Manrope:wght@500;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface": "#f8fafc", 
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#f1f5f9", 
+                        "on-surface": "#0f172a", 
+                        "on-surface-variant": "#475569", 
+                        "outline-variant": "#cbd5e1", 
+                        "primary": "#10b981", 
+                        "primary-container": "#d1fae5", 
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#064e3b", 
+                        "secondary": "#334155", 
+                        "error": "#ef4444", 
+                        "error-container": "#fee2e2", 
+                        "on-error-container": "#7f1d1d", 
+                    },
+                    fontFamily: {
+                        "headline": ["Inter", "sans-serif"],
+                        "body": ["Inter", "sans-serif"],
+                        "label": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1.5rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <link href="styles.css" rel="stylesheet" />
+</head>
+
+<body class="bg-surface text-on-surface min-h-screen pb-32 font-body">
+
+    <!-- TopNav -->
+    <header class="fixed top-0 w-full z-[100] flex items-center justify-between px-6 py-4 bg-white/80 backdrop-blur-md shadow-sm border-b border-outline-variant/30">
+        <a href="index.html" class="flex items-center gap-2 cursor-pointer">
+            <span class="material-symbols-outlined text-primary text-2xl"><i class="fa-solid fa-seedling"></i></span>
+            <span class="text-xl font-black text-on-surface tracking-tighter">Wheat<span class="text-primary">Guard</span></span>
+        </a>
+        <div class="flex items-center gap-6">
+            <nav class="hidden md:flex items-center gap-8">
+                <a class="text-on-surface-variant hover:text-primary transition-colors font-label text-[11px] font-bold uppercase tracking-wider" href="index.html">Home</a>
+                <a class="text-on-surface-variant hover:text-primary transition-colors font-label text-[11px] font-bold uppercase tracking-wider" href="dashboard.html">Detect</a>
+                <a class="text-primary font-bold font-label text-[11px] uppercase tracking-wider bg-primary-container px-3 py-1 rounded-full" href="disease_info.html">Info</a>
+            </nav>
+            <!-- Google Translate Setup -->
+            <div class="relative group ml-4" id="custom-lang-selector">
+                <button class="flex items-center gap-2 bg-surface-container px-4 py-2 hover:bg-outline-variant/30 text-on-surface rounded-full font-bold font-label text-xs uppercase tracking-wider transition-colors border border-outline-variant/50" aria-label="Select Language">
+                    <i class="fa-solid fa-language text-[16px]"></i>
+                    <span id="current-lang-text" class="notranslate">EN</span>
+                    <i class="fa-solid fa-chevron-down text-[12px]"></i>
+                </button>
+                <div class="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-outline-variant/30 overflow-hidden opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all transform origin-top translate-y-2 group-hover:translate-y-0 z-50">
+                    <ul class="py-2 flex flex-col font-label text-sm font-semibold text-on-surface-variant">
+                        <li><button class="w-full text-left px-4 py-2 hover:bg-primary-container hover:text-on-primary-container transition-colors notranslate" onclick="changeLanguage('en', 'EN')">English (EN)</button></li>
+                        <li><button class="w-full text-left px-4 py-2 hover:bg-primary-container hover:text-on-primary-container transition-colors notranslate" onclick="changeLanguage('hi', 'HI')">हिन्दी (HI)</button></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="google_translate_element" class="hidden"></div>
+        </div>
+    </header>
+
+    <main class="pt-[104px] space-y-16">
+        
+        <section class="max-w-6xl mx-auto px-4 md:px-8 pb-10">
+            <div class="text-center mb-12">
+                <div class="inline-flex items-center gap-2 bg-primary-container text-primary-container-on px-4 py-1.5 rounded-full font-label text-xs font-black uppercase tracking-widest border border-primary/20 mb-4">
+                    <i class="fa-solid fa-book-open"></i> Knowledge Base
+                </div>
+                <h2 class="text-4xl md:text-5xl font-black text-on-surface tracking-tight mb-4">Disease Intelligence Library</h2>
+                <p class="text-on-surface-variant text-lg max-w-2xl mx-auto">Browse known structural vulnerabilities, identify visual symptoms, and deploy standardized treatments to protect your yield.</p>
+                <div class="search-input-wrapper mt-8 relative">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="diseaseSearch" class="search-input shadow-sm focus:shadow-md text-lg" placeholder="Search diseases (e.g. Wheat Leaf Rust)..." onkeyup="filterDiseases()">
+                </div>
+            </div>
+
+            <!-- Prepopulated Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="diseaseGrid">
+                
+                <!-- Card 1 -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="wheat leaf rust">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="assets/wheat_rust.png" onerror="this.src='https://images.unsplash.com/photo-1596426471852-c0e8fdf2de1a?w=800&q=80'" alt="Wheat Leaf Rust" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Wheat Leaf Rust</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">Small, circular, orange-red pustules on the upper surface of leaves. Rapidly reduces photosynthetic area.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">Triazole fungicides (Tebuconazole)</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Destroy volunteer wheat, plant resistant cultivars</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="stripe rust yellow rust">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1520699049698-acd2fccb8cc8?w=800&q=80" alt="Stripe Rust" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Stripe Rust (Yellow)</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">Yellowish-orange pustules arranged in highly visible stripes parallel to leaf veins.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">Apply Azoxystrobin or Propiconazole early</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Adjust planting density to improve airflow</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="stem rust black rust">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1502444330042-d1a1ddf971ba?w=800&q=80" alt="Stem Rust" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Stem Rust (Black)</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">Brick-red to black elongated pustules primarily located on structural stems and leaf sheaths.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">Immediate systemic fungicide application</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Eradicate barberry bushes (alternate host)</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4 -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="powdery mildew">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="assets/powdery_mildew.png" onerror="this.src='https://images.unsplash.com/photo-1502444330042-d1a1ddf971ba?w=800&q=80'" alt="Powdery Mildew" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Powdery Mildew</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">White to pale gray, fuzzy or powdery colonies coating the upper surfaces of leaves and lower stems.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">Sulfur-based or modern systemic fungicides</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Avoid excessive nitrogen fertility, apply Potassium Bicarbonate</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 5 -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="septoria tritici blotch">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="assets/septoria_blotch.png" onerror="this.src='https://images.unsplash.com/photo-1596426471852-c0e8fdf2de1a?w=800&q=80'" alt="Septoria Tritici Blotch" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Septoria Tritici Blotch</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">Irregularly shaped, clustered brown to tan lesions housing small dark fungal fruiting bodies inside.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">SDHI + Triazole premixes during flag leaf emergence</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Crop rotation and deep plowing to bury residues</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 6 -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="fusarium head blight scab">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="assets/fusarium_head_blight.png" onerror="this.src='https://images.unsplash.com/photo-1520699049698-acd2fccb8cc8?w=800&q=80'" alt="Fusarium Head Blight" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Fusarium Head Blight</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">Premature bleaching of spikelets producing pink/orange mold on the head, severely destroying grain quality.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">Prothioconazole applied strictly at anthesis (flowering)</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Avoid planting after corn to naturally break disease cycle</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 7 -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="tan spot">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="assets/tan_spot.png" onerror="this.src='https://images.unsplash.com/photo-1502444330042-d1a1ddf971ba?w=800&q=80'" alt="Tan Spot" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Tan Spot</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">Tan, oval spots bordered by noticeable yellow halos taking shape primarily on lower leaves.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">Early application of strobilurin/triazole mixtures</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Implement strict stubble management to dry environment</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 8 -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="loose smut">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="assets/common_smut.png" onerror="this.src='https://images.unsplash.com/photo-1596426471852-c0e8fdf2de1a?w=800&q=80'" alt="Loose Smut" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Loose Smut</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">Wheat heads are entirely replaced by a mass of dark, olive-black, dusty fungal spores.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">Fungicidal seed treatments (Carboxin) prior to planting</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Hot water seed treatment (54°C) or certified clean seed</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BottomNavBar -->
+    <nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pb-6 pt-3 backdrop-blur-xl bg-white/90 border-t border-outline-variant/30 z-[100] md:hidden shadow-[0_-10px_40px_-15px_rgba(0,0,0,0.1)]">
+        <div class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 hover:text-primary transition-all cursor-pointer" onclick="window.location.href='index.html'">
+            <i class="fa-solid fa-house mb-1 text-lg"></i>
+            <span class="font-label text-[10px] font-bold uppercase tracking-wider">Home</span>
+        </div>
+        <div class="flex flex-col items-center justify-center text-on-surface-variant px-5 py-2 hover:text-primary transition-all cursor-pointer" onclick="window.location.href='dashboard.html'">
+            <i class="fa-solid fa-camera mb-1 text-lg"></i>
+            <span class="font-label text-[10px] font-bold uppercase tracking-wider">Detect</span>
+        </div>
+        <div class="flex flex-col items-center justify-center bg-primary text-white rounded-2xl px-6 pt-3 pb-2 -translate-y-4 shadow-lg cursor-pointer" onclick="window.location.href='disease_info.html'">
+            <i class="fa-solid fa-circle-info mb-1 text-xl"></i>
+            <span class="font-label text-[10px] font-bold uppercase tracking-wider">Info</span>
+        </div>
+    </nav>
+
+    <script>
+        // Disease Search Filter Logic
+        function filterDiseases() {
+            let input = document.getElementById('diseaseSearch').value.toLowerCase();
+            let cards = document.getElementsByClassName('disease-card');
+
+            for (let i = 0; i < cards.length; i++) {
+                let name = cards[i].getAttribute('data-name');
+                if (name.includes(input)) {
+                    cards[i].style.display = "";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Translate Script Setup -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'hi,ta,pa,te,kn,en',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        function changeLanguage(langCode, btnText) {
+            document.getElementById('current-lang-text').innerText = btnText;
+            const selectField = document.querySelector(".goog-te-combo");
+            if (selectField) {
+                selectField.value = langCode;
+                selectField.dispatchEvent(new Event("change"));
+            }
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
+</html>
