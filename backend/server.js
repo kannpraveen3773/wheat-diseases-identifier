@@ -11,10 +11,9 @@ const chatRoutes = require('./routes/chatRoutes');
 const app = express();
 app.set('trust proxy', 1);
 app.use(cors({
-    origin: function(origin, callback) {
-        callback(null, true);
-    },
-    credentials: true,
+    origin: 'https://wheatdiseasesidentifier.netlify.app', // Un netlify URL-ah kudu
+    credentials: true
+
 }));
 app.use(cookieParser());
 app.use(express.json({ limit: '50mb' }));
