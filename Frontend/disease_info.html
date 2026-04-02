@@ -66,6 +66,10 @@
                     <ul class="py-2 flex flex-col font-label text-sm font-semibold text-on-surface-variant">
                         <li><button class="w-full text-left px-4 py-2 hover:bg-primary-container hover:text-on-primary-container transition-colors notranslate" onclick="changeLanguage('en', 'EN')">English (EN)</button></li>
                         <li><button class="w-full text-left px-4 py-2 hover:bg-primary-container hover:text-on-primary-container transition-colors notranslate" onclick="changeLanguage('hi', 'HI')">हिन्दी (HI)</button></li>
+                        <li><button class="w-full text-left px-4 py-2 hover:bg-primary-container hover:text-on-primary-container transition-colors notranslate" onclick="changeLanguage('ta', 'TA')">தமிழ் (TA)</button></li>
+                        <li><button class="w-full text-left px-4 py-2 hover:bg-primary-container hover:text-on-primary-container transition-colors notranslate" onclick="changeLanguage('te', 'TE')">తెలుగు (TE)</button></li>
+                        <li><button class="w-full text-left px-4 py-2 hover:bg-primary-container hover:text-on-primary-container transition-colors notranslate" onclick="changeLanguage('kn', 'KN')">ಕನ್ನಡ (KN)</button></li>
+                        <li><button class="w-full text-left px-4 py-2 hover:bg-primary-container hover:text-on-primary-container transition-colors notranslate" onclick="changeLanguage('pa', 'PA')">ਪੰਜਾਬੀ (PA)</button></li>
                     </ul>
                 </div>
             </div>
@@ -116,7 +120,7 @@
                 <!-- Card 2 -->
                 <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="stripe rust yellow rust">
                     <div class="h-48 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1520699049698-acd2fccb8cc8?w=800&q=80" alt="Stripe Rust" class="w-full h-full object-cover">
+                        <img src="assets/stripe_rust.png" onerror="this.src='https://images.unsplash.com/photo-1520699049698-acd2fccb8cc8?w=800&q=80'" alt="Stripe Rust" class="w-full h-full object-cover">
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
                     </div>
                     <div class="p-6 flex-grow flex flex-col">
@@ -138,7 +142,7 @@
                 <!-- Card 3 -->
                 <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="stem rust black rust">
                     <div class="h-48 relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1502444330042-d1a1ddf971ba?w=800&q=80" alt="Stem Rust" class="w-full h-full object-cover">
+                        <img src="assets/stem_rust.png" onerror="this.src='https://images.unsplash.com/photo-1502444330042-d1a1ddf971ba?w=800&q=80'" alt="Stem Rust" class="w-full h-full object-cover">
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
                     </div>
                     <div class="p-6 flex-grow flex flex-col">
@@ -262,6 +266,72 @@
                             <div class="flex items-start gap-3">
                                 <i class="fa-solid fa-leaf text-primary mt-1"></i>
                                 <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Hot water seed treatment (54°C) or certified clean seed</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 9: Take-all Root Rot -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="take all root rot">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="assets/take_all_root_rot.png" onerror="this.src='https://images.unsplash.com/photo-1596426471852-c0e8fdf2de1a?w=800&q=80'" alt="Take-all Root Rot" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Take-all Root Rot</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">Soil-borne fungus causing blackened, rotting roots and severe stunting. Premature white heads (white ears) are heavily visible in fields.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">Fungicide seed treatments options are limited (Silthiofam)</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Crop rotation (min 2 years to non-host crops), clear volunteer wheat</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 10: Wheat Streak Mosaic Virus -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="wheat streak mosaic virus">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="assets/wheat_streak_mosaic.png" onerror="this.src='https://images.unsplash.com/photo-1520699049698-acd2fccb8cc8?w=800&q=80'" alt="Wheat Streak Mosaic Virus" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Wheat Streak Mosaic Virus</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">Transmitted by the wheat curl mite, causing severe yellow mottling and noticeable streaks parallel to leaf veins.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">No chemical treatment exists for the virus. Miticides for curl mites.</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Ensure a "green bridge" break, late planting, resistant varieties</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 11: Common Bunt -->
+                <article class="disease-card bg-surface-container-lowest rounded-2xl overflow-hidden border border-outline-variant/40 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col" data-name="common bunt stinking smut">
+                    <div class="h-48 relative overflow-hidden">
+                        <img src="assets/common_bunt.png" onerror="this.src='https://images.unsplash.com/photo-1502444330042-d1a1ddf971ba?w=800&q=80'" alt="Common Bunt" class="w-full h-full object-cover">
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm p-2 rounded-full text-error shadow-sm"><i class="fa-solid fa-biohazard"></i></div>
+                    </div>
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="font-black text-xl text-on-surface mb-2">Common Bunt (Stinking Smut)</h3>
+                        <p class="text-sm text-on-surface-variant mb-4 flex-grow">Replaces wheat kernels with dark masses of fungal spores emitting a distinct decaying fish odor.</p>
+                        <div class="space-y-3 border-t border-outline-variant/30 pt-4 text-sm mt-auto">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-flask text-secondary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Standard Tx:</span> <span class="text-on-surface-variant">Apply preventative systemic fungicide seed treatments</span></div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-leaf text-primary mt-1"></i>
+                                <div><span class="font-bold text-on-surface">Organic Tx:</span> <span class="text-on-surface-variant">Hot water seed treatment, thoroughly clean farming equipment</span></div>
                             </div>
                         </div>
                     </div>
