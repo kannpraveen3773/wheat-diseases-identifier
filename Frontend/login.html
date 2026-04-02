@@ -216,14 +216,14 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    credentials: 'include',
                     body: JSON.stringify({ email, password })
                 });
 
                 const data = await response.json();
 
                 if (response.ok) {
-                    localStorage.setItem('token', data.token);
-                    if(data.uid) localStorage.setItem('uid', data.uid);
+                    if(data.uid) localStorage.setItem('uid', data.uid); // Keep UID if needed for UI, but token is in cookie
                     window.location.href = 'dashboard.html';
                 } else {
                     alert('Login failed: ' + (data.error || 'Invalid credentials.'));
@@ -256,12 +256,12 @@
         async function logExternalLogin(user, providerName) {
             try {
                 const token = await user.getIdToken();
-                localStorage.setItem('token', token);
                 if (user.uid) localStorage.setItem('uid', user.uid);
                 await fetch('http://localhost:5000/api/auth/log-external-login', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ uid: user.uid, email: user.email, provider: providerName })
+                    credentials: 'include',
+                    body: JSON.stringify({ uid: user.uid, email: user.email, provider: providerName, token: token })
                 });
             } catch (e) {
                 console.error('Logging failed', e);
