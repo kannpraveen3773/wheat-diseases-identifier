@@ -315,7 +315,8 @@
 
             try {
                 // Main Fetch call mapped strictly to localhost:5000 as requested
-                const response = await fetch('https://wheat-diseases-identifier.onrender.com', {
+                // Change to:
+                const response = await fetch('https://wheat-diseases-identifier.onrender.com/api/analyze-wheat', {
                     method: 'POST',
                     body: formData
                 });
