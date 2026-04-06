@@ -11,7 +11,7 @@ const chatRoutes = require('./routes/chatRoutes');
 const app = express();
 app.set('trust proxy', 1);
 app.use(cors({
-    origin: 'https://wheatdiseasesidentifier.netlify.app', // Un netlify URL-ah kudu
+    origin: ['https://wheatdiseasesidentifier.netlify.app', 'http://localhost:5500', 'http://127.0.0.1:5500'], // Un netlify URL-ah kudu and local dev
     credentials: true
 
 }));
